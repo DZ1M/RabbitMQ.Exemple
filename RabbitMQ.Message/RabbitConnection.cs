@@ -2,6 +2,7 @@
 using RabbitMQ.Client.Events;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Channels;
 
 namespace RabbitMQ.Message
 {
@@ -49,14 +50,13 @@ namespace RabbitMQ.Message
                 var message = Encoding.UTF8.GetString(body);
                 Processar(message);
                 Console.WriteLine("processado apos funcao.");
+                _channel.BasicAck(deliveryTag: e.DeliveryTag, multiple: false);
             };
-            _channel.BasicConsume(queue, true, consumer);
+            _channel.BasicConsume(queue, false, consumer);
         }
         public void Processar(string message)
         {
             Console.WriteLine(message);
-            // function
-            Thread.Sleep(500);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace RabbitMQ.Sender.Controllers
             configureRabbit.Configure();
             configureRabbit.DefineQueue(queue);
 
-            for (var i = 0; i < 10; i++)
+            for (var i = 0; i < 1000; i++)
             {
                 configureRabbit.Sender(queue, JsonSerializer.Serialize(new { nome = "Richard", id = Guid.NewGuid()}));
 
