@@ -12,17 +12,19 @@ namespace RabbitMQ.Sender.Controllers
 
         private readonly ILogger<QueueController> _logger;
         private readonly IRabbitSender _senderToRabbit;
+        private readonly IConfiguration _configuration;
 
-        public QueueController(ILogger<QueueController> logger, IRabbitSender senderToRabbit)
+        public QueueController(ILogger<QueueController> logger, IRabbitSender senderToRabbit, IConfiguration configuration)
         {
             _logger = logger;
             _senderToRabbit = senderToRabbit;
+            _configuration = configuration;
         }
 
         [HttpGet(Name = "SendQueue")]
         public async Task<IActionResult> Test()
         {
-            var queue = "minha-fila";
+            var queue = _configuration["RabbitMqConfig:Queue"];
 
             _senderToRabbit.DefineQueue(queue);
 

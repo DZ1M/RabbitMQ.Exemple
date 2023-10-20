@@ -12,7 +12,9 @@ namespace RabbitMQ.Message
         {
             services.Configure<RabbitMqConfig>(a => configuration.GetSection(nameof(RabbitMqConfig)).Bind(a));
             services.AddSingleton<IRabbitConnection, RabbitConnection>();
+
             services.AddSingleton<IRabbitSender, RabbitSender>();
+            services.AddSingleton<IRabbitConsumer, RabbitConsumer>();
         }
     }
 }
